@@ -34,8 +34,8 @@ export const chunks = pgTable(
 			.references(() => content.id, { onDelete: "cascade" }),
 		/** Not used for articles; reserved for time-offset chunks of video transcripts. */
 		startPosition: integer("start_position"),
-		/** Populated by a later embedding task. */
-		embedding: vector("embedding", { dimensions: 1536 }),
+		/** Chunk embedding; see EMBEDDING_DIMENSIONS in lib/embedding. */
+		embedding: vector("embedding", { dimensions: 1024 }),
 		/** Raw chunk text (no HTML markup). */
 		text: text("text").notNull(),
 		...timestamps,

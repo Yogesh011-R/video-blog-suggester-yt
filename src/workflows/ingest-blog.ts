@@ -3,6 +3,7 @@ import { FatalError } from "workflow";
 import { db } from "#/db/index.ts";
 import { chunks as chunksTable, content } from "#/db/schema/index.ts";
 import { extractArticle } from "#/lib/article.ts";
+import { embedChunks } from "#/lib/embedding/embed-chunks.ts";
 import { diffFeed, type FeedArticle, parseFeed } from "#/lib/rss.ts";
 import { batchExec } from "#/workflows/utils.ts";
 
@@ -14,9 +15,8 @@ const BATCH_SIZE = 10;
 /**
  * Two-step ingest:
  *  1. Diff the RSS feed against the `content` table to find new articles.
- *  2. For each new article (10 at a time), fetch, extract, chunk, and store it.
- *
- * Embeddings are intentionally left for a later task.
+ *  2. For each new article (10 at a time), fetch, extract, chunk, embed, and
+ *     store it.
  */
 export async function ingestBlog() {
 	"use workflow";
@@ -62,7 +62,10 @@ async function getMissingArticles(): Promise<FeedArticle[]> {
 	);
 }
 
-/** Step 2: fetch one article, extract its main content, chunk it, and store it. */
+/**
+ * Step 2: fetch one article, extract its main content, chunk it, embed the
+ * chunks, and store everything.
+ */
 async function ingestArticle(article: FeedArticle) {
 	"use step";
 
@@ -83,6 +86,8 @@ async function ingestArticle(article: FeedArticle) {
 		throw new FatalError(`No og:image found for ${article.url}`);
 	}
 
+	const embeddings = await embedChunks(chunks);
+
 	await db.transaction(async (tx) => {
 		const [row] = await tx
 			.insert(content)
@@ -102,9 +107,13 @@ async function ingestArticle(article: FeedArticle) {
 		if (!row) return;
 
 		if (chunks.length > 0) {
-			await tx
-				.insert(chunksTable)
-				.values(chunks.map((text) => ({ contentId: row.id, text })));
+			await tx.insert(chunksTable).values(
+				chunks.map((text, i) => ({
+					contentId: row.id,
+					text,
+					embedding: embeddings[i],
+				})),
+			);
 		}
 	});
 
