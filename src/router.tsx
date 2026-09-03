@@ -13,11 +13,21 @@ export function getRouter() {
     scrollRestoration: true,
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
+    defaultNotFoundComponent: NotFound,
   })
 
   setupRouterSsrQueryIntegration({ router, queryClient: context.queryClient })
 
   return router
+}
+
+function NotFound() {
+  return (
+    <div className="flex min-h-svh flex-col items-center justify-center gap-2 p-8 text-center">
+      <p className="text-2xl font-semibold">404</p>
+      <p className="text-neutral-500">Page not found</p>
+    </div>
+  )
 }
 
 declare module '@tanstack/react-router' {
