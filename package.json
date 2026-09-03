@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vite dev --port 3000",
     "generate-routes": "tsr generate",
+    "test": "bun test",
     "build": "vite build",
     "preview": "vite preview",
     "format": "biome format",
@@ -21,6 +22,7 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
+    "@opentelemetry/api": "^1.9.1",
     "@t3-oss/env-core": "^0.13.10",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/ai": "latest",
@@ -44,9 +46,11 @@
     "clsx": "^2.1.1",
     "drizzle-kit": "^0.31.9",
     "drizzle-orm": "^0.45.1",
+    "fast-xml-parser": "^5.11.1",
     "highlight.js": "^11.11.1",
     "lucide-react": "^0.577.0",
     "nitro": "3.0.260610-beta",
+    "node-html-parser": "^9.0.3",
     "pg": "^8.16.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -55,6 +59,7 @@
     "tailwindcss": "^4.1.18",
     "tw-animate-css": "^1.3.6",
     "vite-plugin-neon-new": "^0.8.0",
+    "workflow": "^4.8.5",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -64,6 +69,7 @@
     "@tanstack/devtools-event-client": "latest",
     "@tanstack/devtools-vite": "latest",
     "@tanstack/router-cli": "^1.132.0",
+    "@types/bun": "^1.4.0",
     "@types/node": "^22.10.2",
     "@types/pg": "^8.15.6",
     "@types/react": "^19.2.0",
