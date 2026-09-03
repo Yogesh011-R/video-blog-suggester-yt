@@ -31,7 +31,9 @@ export async function batchExec<T>(
 
 	for (let i = 0; i < groups.length; i++) {
 		const batch = groups[i];
-		const results = await Promise.allSettled(batch.map((item) => fn(item)));
+		const results = await Promise.allSettled(
+			batch.map((item) => Promise.resolve().then(() => fn(item))),
+		);
 
 		results.forEach((result, j) => {
 			if (result.status === "fulfilled") {

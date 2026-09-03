@@ -17,13 +17,13 @@ const OPENAI_MODEL= 'text-embedding-3-small'
  * Pass the result straight to `embed({ adapter, input })` from `@tanstack/ai`.
  */
 export const getEmbeddingModel = () => {
-	if (env.EMBEDDING_PROVDIER === "qwen") {
+	if (env.EMBEDDING_PROVIDER === "qwen") {
 		return createOllamaEmbedding(QWEN_MODEL, env.LOCAL_EMBEDDING_BASE_URL);
 	}
 
 	if (!env.OPENAI_API_KEY) {
 		throw new Error(
-			"OPENAI_API_KEY is required when EMBEDDING_PROVDIER is \"openai\".",
+			'OPENAI_API_KEY is required when EMBEDDING_PROVIDER is "openai".',
 		);
 	}
 

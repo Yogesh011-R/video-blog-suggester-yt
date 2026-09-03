@@ -9,7 +9,7 @@ export const env = createEnv({
 		BETTER_AUTH_SECRET: z.string().min(1),
 		GITHUB_CLIENT_ID: z.string().min(1),
 		GITHUB_CLIENT_SECRET: z.string().min(1),
-		EMBEDDING_PROVDIER:z.enum(['qwen',"openai"]),
+		EMBEDDING_PROVIDER:z.enum(['qwen',"openai"]),
 		LOCAL_EMBEDDING_BASE_URL:z.url().optional(),
 		OPENAI_API_KEY:z.string().min(1).optional()
 	},

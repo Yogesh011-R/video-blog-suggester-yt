@@ -1,5 +1,5 @@
 {
-  "id": "e3d57c5c-0efe-4d3f-9a5d-227c5ead3754",
+  "id": "51a6a362-7392-4141-8026-93e7bf136785",
   "prevId": "73269364-d367-4b39-88b3-b6a52a1bd9b9",
   "version": "7",
   "dialect": "postgresql",
@@ -357,7 +357,7 @@
         },
         "embedding": {
           "name": "embedding",
-          "type": "vector(1536)",
+          "type": "vector(1024)",
           "primaryKey": false,
           "notNull": false
         },
@@ -459,7 +459,7 @@
           "name": "thumbnail_url",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "type": {
           "name": "type",
