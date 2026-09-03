@@ -4,3 +4,4 @@ import {env} from '@/env.ts'
 import * as schema from './schema'
 
 export const db = drizzle(env.DATABASE_URL, { schema })
+
