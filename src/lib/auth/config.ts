@@ -8,6 +8,11 @@ import { env } from "#/env.ts";
 export const auth = betterAuth({
 	baseURL: env.BETTER_AUTH_URL,
 	secret: env.BETTER_AUTH_SECRET,
+	advanced:{
+		database:{
+			generateId:"uuid"
+		}
+	},
 	database: drizzleAdapter(db, { provider: "pg", schema }),
 	socialProviders: {
 		github: {
